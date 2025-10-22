@@ -3,7 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SHARK - Roblox Executor Online</title>
+    <title>Shark Executor - O Melhor Executor para Roblox</title>
+    <meta name="description" content="Shark Executor - Executor profissional para Roblox com interface moderna e recursos avançados. Download grátis!">
     <style>
         * {
             margin: 0;
@@ -13,1184 +14,784 @@
 
         body {
             font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
-            background: #0a0a0a;
+            background: #0a0e27;
             color: #fff;
-            overflow: hidden;
-            height: 100vh;
+            overflow-x: hidden;
         }
 
-        .executor {
-            width: 100vw;
-            height: 100vh;
-            background: #1a1a1a;
-            display: flex;
-            flex-direction: column;
+        /* Particles Background */
+        #particles {
+            position: fixed;
+            width: 100%;
+            height: 100%;
+            top: 0;
+            left: 0;
+            z-index: 0;
         }
 
-        /* Top Bar */
-        .top-bar {
-            background: #0f0f0f;
-            padding: 12px 15px;
+        .content {
+            position: relative;
+            z-index: 1;
+        }
+
+        /* Header/Navigation */
+        header {
+            padding: 20px 50px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border-bottom: 1px solid #2a2a2a;
+            background: rgba(10, 14, 39, 0.8);
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0, 212, 255, 0.2);
+            position: sticky;
+            top: 0;
+            z-index: 100;
         }
 
-        .menu-title {
+        .logo {
+            font-size: 28px;
+            font-weight: 900;
+            color: #00d4ff;
             display: flex;
             align-items: center;
-            gap: 12px;
+            gap: 10px;
         }
 
-        .menu-icon {
-            width: 24px;
-            height: 24px;
+        nav {
             display: flex;
-            flex-direction: column;
-            justify-content: space-around;
-            cursor: pointer;
+            gap: 30px;
         }
 
-        .menu-icon span {
-            width: 100%;
-            height: 2px;
-            background: #fff;
+        nav a {
+            color: #fff;
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
         }
 
-        .title {
-            font-size: 16px;
-            font-weight: 700;
-            letter-spacing: 2px;
+        nav a:hover {
             color: #00d4ff;
         }
 
-        .version {
-            font-size: 11px;
-            color: #666;
-            background: #252525;
-            padding: 2px 8px;
-            border-radius: 10px;
-            margin-left: 10px;
-        }
-
-        .window-controls {
-            display: flex;
-            gap: 10px;
-        }
-
-        .control-btn {
-            width: 32px;
-            height: 32px;
-            background: transparent;
-            border: none;
-            color: #999;
-            cursor: pointer;
-            border-radius: 4px;
-            font-size: 16px;
-            transition: all 0.2s;
-        }
-
-        .control-btn:hover {
-            background: #2a2a2a;
-            color: #fff;
-        }
-
-        /* Tabs Area */
-        .tabs-area {
-            background: #141414;
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
             display: flex;
             align-items: center;
-            border-bottom: 1px solid #2a2a2a;
-            padding: 0 10px;
-            gap: 5px;
-            min-height: 45px;
+            justify-content: center;
+            text-align: center;
+            padding: 50px 20px;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(10, 14, 39, 0.9) 100%);
         }
 
-        .tab {
-            background: #1f1f1f;
-            border: none;
-            color: #999;
-            padding: 10px 20px;
-            cursor: pointer;
+        .hero-content {
+            max-width: 800px;
+        }
+
+        .hero h1 {
+            font-size: 72px;
+            margin-bottom: 20px;
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        .hero p {
+            font-size: 24px;
+            color: #b3b3b3;
+            margin-bottom: 40px;
+            animation: fadeInUp 1s ease-out 0.2s both;
+        }
+
+        .cta-buttons {
             display: flex;
-            align-items: center;
-            gap: 8px;
-            font-size: 13px;
-            border-radius: 5px 5px 0 0;
-            transition: all 0.2s;
-        }
-
-        .tab.active {
-            background: #1a1a1a;
-            color: #fff;
-        }
-
-        .tab:hover:not(.active) {
-            background: #252525;
-            color: #ccc;
-        }
-
-        .tab-icon {
-            width: 16px;
-            height: 16px;
-        }
-
-        .close-tab {
-            margin-left: 5px;
-            font-size: 16px;
-            opacity: 0.6;
-        }
-
-        .close-tab:hover {
-            opacity: 1;
-            color: #e74c3c;
-        }
-
-        .add-tab {
-            background: transparent;
-            border: none;
-            color: #999;
-            cursor: pointer;
-            font-size: 20px;
-            padding: 8px 12px;
-            border-radius: 4px;
-        }
-
-        .add-tab:hover {
-            background: #2a2a2a;
-            color: #fff;
-        }
-
-        /* Editor Section */
-        .editor-section {
-            flex: 1;
-            display: flex;
-            overflow: hidden;
-        }
-
-        .left-panel {
-            flex: 1;
-            display: flex;
-            flex-direction: column;
-            background: #1a1a1a;
-        }
-
-        .editor-container {
-            flex: 1;
-            display: flex;
-            position: relative;
-        }
-
-        .line-numbers {
-            background: #141414;
-            color: #4a4a4a;
-            padding: 20px 15px;
-            text-align: right;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 13px;
-            line-height: 1.6;
-            user-select: none;
-            min-width: 50px;
-            border-right: 1px solid #2a2a2a;
-            white-space: pre;
-            overflow-y: hidden;
-        }
-
-        #codeEditor {
-            flex: 1;
-            background: #1a1a1a;
-            color: #d4d4d4;
-            padding: 20px 15px;
-            border: none;
-            outline: none;
-            resize: none;
-            font-family: 'Consolas', 'Monaco', monospace;
-            font-size: 13px;
-            line-height: 1.6;
-            overflow-y: auto;
-        }
-
-        #codeEditor::-webkit-scrollbar {
-            width: 10px;
-        }
-
-        #codeEditor::-webkit-scrollbar-track {
-            background: #0f0f0f;
-        }
-
-        #codeEditor::-webkit-scrollbar-thumb {
-            background: #2a2a2a;
-            border-radius: 5px;
-        }
-
-        /* Console Panel */
-        .console-panel {
-            background: #0f0f0f;
-            border-top: 1px solid #2a2a2a;
-            height: 200px;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .console-header {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 15px;
-            background: #141414;
-            border-bottom: 1px solid #2a2a2a;
-            font-size: 12px;
-            font-weight: 600;
-        }
-
-        .clear-console {
-            background: #2a2a2a;
-            border: none;
-            color: #999;
-            padding: 4px 12px;
-            border-radius: 4px;
-            cursor: pointer;
-            font-size: 11px;
-        }
-
-        .clear-console:hover {
-            background: #3a3a3a;
-            color: #fff;
-        }
-
-        .console-content {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px 15px;
-            font-family: 'Consolas', monospace;
-            font-size: 11px;
-            line-height: 1.6;
-        }
-
-        .console-content::-webkit-scrollbar {
-            width: 8px;
-        }
-
-        .console-content::-webkit-scrollbar-track {
-            background: #0a0a0a;
-        }
-
-        .console-content::-webkit-scrollbar-thumb {
-            background: #2a2a2a;
-            border-radius: 4px;
-        }
-
-        .console-line {
-            margin: 3px 0;
-            color: #999;
-        }
-
-        .console-line.success {
-            color: #2ecc71;
-        }
-
-        .console-line.error {
-            color: #e74c3c;
-        }
-
-        .console-line.info {
-            color: #3498db;
-        }
-
-        /* Right Panel */
-        .right-panel {
-            width: 320px;
-            background: #141414;
-            border-left: 1px solid #2a2a2a;
-            display: flex;
-            flex-direction: column;
-        }
-
-        .search-container {
-            padding: 15px;
-            border-bottom: 1px solid #2a2a2a;
-        }
-
-        .search-box {
-            width: 100%;
-            background: #1a1a1a;
-            border: 1px solid #2a2a2a;
-            border-radius: 6px;
-            padding: 10px 15px;
-            color: #999;
-            font-size: 13px;
-            outline: none;
-        }
-
-        .search-box:focus {
-            border-color: #00d4ff;
-            color: #fff;
-        }
-
-        .scripts-list {
-            flex: 1;
-            overflow-y: auto;
-            padding: 10px;
-        }
-
-        .script-category {
-            margin-bottom: 15px;
-        }
-
-        .category-title {
-            font-size: 11px;
-            font-weight: 700;
-            color: #666;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-            margin-bottom: 8px;
-            padding: 0 5px;
-        }
-
-        .script-item {
-            background: #1a1a1a;
-            padding: 12px;
-            margin-bottom: 6px;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: all 0.2s;
-            border: 1px solid transparent;
-        }
-
-        .script-item:hover {
-            background: #1f1f1f;
-            border-color: #00d4ff;
-            transform: translateX(3px);
-        }
-
-        .script-name {
-            font-size: 13px;
-            font-weight: 600;
-            margin-bottom: 4px;
-        }
-
-        .script-desc {
-            font-size: 11px;
-            color: #666;
-        }
-
-        /* Bottom Controls */
-        .bottom-controls {
-            background: #0f0f0f;
-            padding: 12px 15px;
-            display: flex;
-            gap: 10px;
-            border-top: 1px solid #2a2a2a;
-            justify-content: space-between;
-        }
-
-        .control-group {
-            display: flex;
-            gap: 8px;
-            align-items: center;
-        }
-
-        .status-indicator {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            padding: 0 15px;
-            font-size: 12px;
-            color: #999;
-        }
-
-        .status-dot {
-            width: 8px;
-            height: 8px;
-            border-radius: 50%;
-            background: #e74c3c;
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { opacity: 1; }
-            50% { opacity: 0.5; }
-        }
-
-        .status-indicator.attached .status-dot {
-            background: #2ecc71;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            animation: fadeInUp 1s ease-out 0.4s both;
         }
 
         .btn {
-            padding: 10px 20px;
+            padding: 18px 45px;
+            font-size: 18px;
+            font-weight: 700;
             border: none;
-            border-radius: 6px;
-            font-size: 13px;
-            font-weight: 600;
+            border-radius: 50px;
             cursor: pointer;
-            display: flex;
+            transition: all 0.3s;
+            text-decoration: none;
+            display: inline-flex;
             align-items: center;
-            gap: 8px;
-            transition: all 0.2s;
-        }
-
-        .btn:hover {
-            transform: translateY(-1px);
-        }
-
-        .btn:active {
-            transform: translateY(0);
-        }
-
-        .btn:disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-        }
-
-        .btn-execute {
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-            color: #000;
-        }
-
-        .btn-clear, .btn-open, .btn-save {
-            background: #2a2a2a;
-            color: #fff;
-        }
-
-        .btn-attach {
-            background: linear-gradient(135deg, #3498db 0%, #2980b9 100%);
-            color: #fff;
-        }
-
-        .btn-attach.attached {
-            background: linear-gradient(135deg, #2ecc71 0%, #27ae60 100%);
-        }
-
-        .btn-kill {
-            background: linear-gradient(135deg, #e74c3c 0%, #c0392b 100%);
-            color: #fff;
-        }
-
-        /* Syringe Animation */
-        .overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.85);
-            z-index: 9999;
-            display: none;
-        }
-
-        .overlay.active {
-            display: block;
-        }
-
-        .syringe-container {
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            z-index: 10000;
-            display: none;
-        }
-
-        .syringe-container.active {
-            display: block;
-            animation: syringeAttach 2s ease-in-out;
-        }
-
-        @keyframes syringeAttach {
-            0% {
-                transform: translate(-50%, -150%) rotate(-45deg);
-                opacity: 0;
-            }
-            50% {
-                transform: translate(-50%, -50%) rotate(0deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translate(-50%, -50%) rotate(0deg) scale(0.9);
-                opacity: 0;
-            }
-        }
-
-        .syringe {
-            width: 200px;
-            height: 300px;
-            position: relative;
-            filter: drop-shadow(0 10px 30px rgba(52, 152, 219, 0.5));
-        }
-
-        .syringe-body {
-            width: 80px;
-            height: 200px;
-            background: linear-gradient(to bottom, rgba(255,255,255,0.3), rgba(255,255,255,0.15));
-            border: 3px solid #fff;
-            border-radius: 10px;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 50px;
-            box-shadow: inset 0 0 20px rgba(255,255,255,0.2);
-        }
-
-        .syringe-liquid {
-            width: 70px;
-            height: 150px;
-            background: linear-gradient(to bottom, #3498db, #2ecc71);
-            position: absolute;
-            bottom: 5px;
-            left: 50%;
-            transform: translateX(-50%);
-            border-radius: 5px;
-            animation: syringeFill 1.5s ease-in-out;
-            box-shadow: 0 0 20px rgba(52, 152, 219, 0.6);
-        }
-
-        @keyframes syringeFill {
-            0% { height: 0px; }
-            100% { height: 150px; }
-        }
-
-        .syringe-plunger {
-            width: 50px;
-            height: 80px;
-            background: linear-gradient(to bottom, #95a5a6, #7f8c8d);
-            border-radius: 5px;
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 0;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-        }
-
-        .syringe-needle {
-            width: 12px;
-            height: 80px;
-            background: linear-gradient(to bottom, #ecf0f1, #bdc3c7);
-            position: absolute;
-            left: 50%;
-            transform: translateX(-50%);
-            top: 250px;
-            border-radius: 2px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.4);
-        }
-
-        .syringe-needle::after {
-            content: '';
-            width: 0;
-            height: 0;
-            border-left: 6px solid transparent;
-            border-right: 6px solid transparent;
-            border-top: 18px solid #95a5a6;
-            position: absolute;
-            bottom: -18px;
-            left: 0;
-        }
-
-        .syringe-container.executing .syringe-plunger {
-            animation: executeInjection 0.6s ease-in-out;
-        }
-
-        .syringe-container.executing .syringe-liquid {
-            animation: liquidDrain 0.6s ease-in-out forwards;
-        }
-
-        @keyframes executeInjection {
-            0% { transform: translateX(-50%) translateY(0); }
-            50% { transform: translateX(-50%) translateY(30px); }
-            100% { transform: translateX(-50%) translateY(0); }
-        }
-
-        @keyframes liquidDrain {
-            0% { height: 150px; opacity: 1; }
-            100% { height: 0px; opacity: 0.3; }
-        }
-
-        /* Toast Notifications */
-        .toast-container {
-            position: fixed;
-            top: 60px;
-            right: 20px;
-            z-index: 10001;
-            display: flex;
-            flex-direction: column;
             gap: 10px;
         }
 
-        .toast {
-            padding: 15px 25px;
-            border-radius: 8px;
-            font-size: 13px;
-            font-weight: 600;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
-            animation: slideIn 0.3s ease-out;
-            min-width: 250px;
+        .btn-primary {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            color: #000;
+            box-shadow: 0 10px 30px rgba(0, 212, 255, 0.4);
         }
 
-        @keyframes slideIn {
-            from {
-                transform: translateX(400px);
-                opacity: 0;
-            }
-            to {
-                transform: translateX(0);
-                opacity: 1;
-            }
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px rgba(0, 212, 255, 0.6);
         }
 
-        .toast.success {
-            background: #2ecc71;
+        .btn-secondary {
+            background: transparent;
+            color: #00d4ff;
+            border: 2px solid #00d4ff;
+        }
+
+        .btn-secondary:hover {
+            background: #00d4ff;
             color: #000;
         }
 
-        .toast.error {
-            background: #e74c3c;
-            color: #fff;
+        /* Features Section */
+        .features {
+            padding: 100px 50px;
+            background: rgba(15, 20, 45, 0.5);
         }
 
-        .toast.info {
-            background: #3498db;
-            color: #fff;
+        .section-title {
+            text-align: center;
+            font-size: 48px;
+            margin-bottom: 60px;
+            color: #00d4ff;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .feature-card {
+            background: rgba(0, 212, 255, 0.05);
+            padding: 40px;
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            transition: all 0.3s;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: #00d4ff;
+            box-shadow: 0 10px 40px rgba(0, 212, 255, 0.3);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-card h3 {
+            font-size: 24px;
+            margin-bottom: 15px;
+            color: #00d4ff;
+        }
+
+        .feature-card p {
+            color: #b3b3b3;
+            line-height: 1.6;
+        }
+
+        /* Screenshots Section */
+        .screenshots {
+            padding: 100px 50px;
+            text-align: center;
+        }
+
+        .screenshot-container {
+            max-width: 1000px;
+            margin: 0 auto;
+            padding: 20px;
+            background: rgba(0, 212, 255, 0.05);
+            border-radius: 20px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .screenshot-container img {
+            width: 100%;
+            border-radius: 10px;
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+        }
+
+        /* Download Section */
+        .download {
+            padding: 100px 50px;
+            text-align: center;
+            background: linear-gradient(135deg, rgba(0, 212, 255, 0.1) 0%, rgba(10, 14, 39, 0.9) 100%);
+        }
+
+        .download-box {
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 50px;
+            background: rgba(0, 0, 0, 0.5);
+            border-radius: 20px;
+            border: 2px solid #00d4ff;
+        }
+
+        .version-badge {
+            display: inline-block;
+            background: rgba(0, 212, 255, 0.2);
+            padding: 10px 20px;
+            border-radius: 20px;
+            margin-bottom: 20px;
+            color: #00d4ff;
+            font-weight: 600;
+        }
+
+        .download-info {
+            margin: 30px 0;
+            color: #b3b3b3;
+        }
+
+        .download-info p {
+            margin: 10px 0;
+        }
+
+        /* Installation Section */
+        .installation {
+            padding: 100px 50px;
+            background: rgba(15, 20, 45, 0.5);
+        }
+
+        .steps-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .step {
+            background: rgba(0, 212, 255, 0.05);
+            padding: 30px;
+            margin: 20px 0;
+            border-radius: 15px;
+            border-left: 5px solid #00d4ff;
+            display: flex;
+            gap: 20px;
+            align-items: flex-start;
+        }
+
+        .step-number {
+            background: linear-gradient(135deg, #00d4ff 0%, #0099ff 100%);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 24px;
+            font-weight: 900;
+            color: #000;
+            flex-shrink: 0;
+        }
+
+        .step-content h3 {
+            color: #00d4ff;
+            margin-bottom: 10px;
+        }
+
+        .step-content p {
+            color: #b3b3b3;
+            line-height: 1.6;
+        }
+
+        /* FAQ Section */
+        .faq {
+            padding: 100px 50px;
+        }
+
+        .faq-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+
+        .faq-item {
+            background: rgba(0, 212, 255, 0.05);
+            padding: 25px;
+            margin: 15px 0;
+            border-radius: 15px;
+            border: 1px solid rgba(0, 212, 255, 0.2);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+
+        .faq-item:hover {
+            border-color: #00d4ff;
+        }
+
+        .faq-question {
+            font-size: 18px;
+            font-weight: 600;
+            color: #00d4ff;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .faq-answer {
+            margin-top: 15px;
+            color: #b3b3b3;
+            line-height: 1.6;
+            display: none;
+        }
+
+        .faq-item.active .faq-answer {
+            display: block;
+        }
+
+        /* Footer */
+        footer {
+            padding: 50px;
+            text-align: center;
+            background: rgba(0, 0, 0, 0.5);
+            border-top: 1px solid rgba(0, 212, 255, 0.2);
+        }
+
+        .footer-links {
+            display: flex;
+            gap: 30px;
+            justify-content: center;
+            margin-bottom: 20px;
+        }
+
+        .footer-links a {
+            color: #b3b3b3;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+
+        .footer-links a:hover {
+            color: #00d4ff;
+        }
+
+        .copyright {
+            color: #666;
+            margin-top: 20px;
+        }
+
+        /* Animations */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero h1 {
+                font-size: 48px;
+            }
+
+            .hero p {
+                font-size: 18px;
+            }
+
+            header {
+                padding: 15px 20px;
+            }
+
+            nav {
+                display: none;
+            }
+
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Warning Banner */
+        .warning-banner {
+            background: rgba(255, 193, 7, 0.1);
+            border: 2px solid #ffc107;
+            padding: 20px;
+            margin: 40px auto;
+            max-width: 800px;
+            border-radius: 15px;
+            text-align: center;
+        }
+
+        .warning-banner h4 {
+            color: #ffc107;
+            margin-bottom: 10px;
+        }
+
+        .warning-banner p {
+            color: #b3b3b3;
         }
     </style>
 </head>
 <body>
-    <div class="executor">
-        <!-- Top Bar -->
-        <div class="top-bar">
-            <div class="menu-title">
-                <div class="menu-icon">
-                    <span></span>
-                    <span></span>
-                    <span></span>
-                </div>
-                <span class="title">SHARK</span>
-                <span class="version">v1.0.1</span>
+    <canvas id="particles"></canvas>
+    
+    <div class="content">
+        <!-- Header -->
+        <header>
+            <div class="logo">
+                🦈 SHARK EXECUTOR
             </div>
-            <div class="window-controls">
-                <button class="control-btn" title="Settings">⚙</button>
-                <button class="control-btn" title="Fullscreen" onclick="toggleFullscreen()">⛶</button>
-            </div>
-        </div>
+            <nav>
+                <a href="#features">Features</a>
+                <a href="#download">Download</a>
+                <a href="#installation">Instalação</a>
+                <a href="#faq">FAQ</a>
+            </nav>
+        </header>
 
-        <!-- Tabs -->
-        <div class="tabs-area">
-            <div class="tab active" data-tab="1">
-                <span class="tab-icon">📄</span>
-                Tab 1
-                <span class="close-tab" onclick="closeTab(event, 1)">✕</span>
-            </div>
-            <div class="tab" data-tab="2">
-                <span class="tab-icon">📄</span>
-                Tab 2
-                <span class="close-tab" onclick="closeTab(event, 2)">✕</span>
-            </div>
-            <div class="tab" data-tab="3">
-                <span class="tab-icon">📄</span>
-                Tab 3
-                <span class="close-tab" onclick="closeTab(event, 3)">✕</span>
-            </div>
-            <div class="tab" data-tab="4">
-                <span class="tab-icon">📄</span>
-                Tab 4
-                <span class="close-tab" onclick="closeTab(event, 4)">✕</span>
-            </div>
-            <button class="add-tab" onclick="addNewTab()">+</button>
-        </div>
-
-        <!-- Editor Section -->
-        <div class="editor-section">
-            <div class="left-panel">
-                <div class="editor-container">
-                    <div class="line-numbers" id="lineNumbers">1</div>
-                    <textarea id="codeEditor" spellcheck="false" placeholder="-- Seu código Lua aqui...">loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()</textarea>
+        <!-- Hero Section -->
+        <section class="hero">
+            <div class="hero-content">
+                <h1>SHARK EXECUTOR</h1>
+                <p>O executor mais poderoso e moderno para Roblox com interface profissional e recursos avançados</p>
+                <div class="cta-buttons">
+                    <a href="#download" class="btn btn-primary">
+                        <span>📥</span>
+                        Download Grátis
+                    </a>
+                    <a href="#features" class="btn btn-secondary">
+                        <span>✨</span>
+                        Ver Features
+                    </a>
                 </div>
+            </div>
+        </section>
+
+        <!-- Features Section -->
+        <section class="features" id="features">
+            <h2 class="section-title">🚀 Recursos Principais</h2>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon">💉</div>
+                    <h3>Injeção Rápida</h3>
+                    <p>Sistema de injeção otimizado que se conecta ao Roblox em segundos com animações visuais.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Alta Performance</h3>
+                    <p>Execução ultra-rápida de scripts Lua sem travamentos ou lag no jogo.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎨</div>
+                    <h3>Interface Moderna</h3>
+                    <p>Design profissional e intuitivo com tema escuro e animações suaves.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📚</div>
+                    <h3>Biblioteca de Scripts</h3>
+                    <p>Scripts populares pré-carregados: Infinite Yield, Dex, ESP, Fly e muito mais.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">💾</div>
+                    <h3>Sistema de Tabs</h3>
+                    <p>Múltiplas abas para organizar e trabalhar com vários scripts simultaneamente.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Console Interativo</h3>
+                    <p>Console com logs coloridos, timestamps e detecção automática de comandos.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔍</div>
+                    <h3>Busca de Scripts</h3>
+                    <p>Sistema de busca inteligente para encontrar scripts rapidamente.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🛡️</div>
+                    <h3>Seguro e Estável</h3>
+                    <p>Testado extensivamente para garantir segurança e estabilidade.</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🆓</div>
+                    <h3>100% Grátis</h3>
+                    <p>Completamente gratuito, sem anúncios ou limitações. Open source!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Screenshots Section -->
+        <section class="screenshots" id="screenshots">
+            <h2 class="section-title">📸 Screenshots</h2>
+            <div class="screenshot-container">
+                <img src="https://via.placeholder.com/1000x600/0a0e27/00d4ff?text=Shark+Executor+Interface" alt="Shark Executor Interface">
+            </div>
+            <p style="margin-top: 20px; color: #666;">Interface moderna e intuitiva com tema dark e azul oceano</p>
+        </section>
+
+        <!-- Download Section -->
+        <section class="download" id="download">
+            <h2 class="section-title">📥 Download</h2>
+            <div class="download-box">
+                <span class="version-badge">v1.0.1 - Última Versão</span>
+                <h3 style="font-size: 32px; margin: 20px 0; color: #00d4ff;">Baixe Agora</h3>
                 
-                <div class="console-panel">
-                    <div class="console-header">
-                        <span>📊 Console Output</span>
-                        <button class="clear-console" onclick="clearConsole()">Clear</button>
-                    </div>
-                    <div class="console-content" id="consoleContent"></div>
+                <div class="download-info">
+                    <p>📦 Tamanho: ~5 MB</p>
+                    <p>💻 Sistema: Windows 10/11</p>
+                    <p>🎮 Compatível com: Roblox UWP/Player</p>
+                    <p>📅 Atualizado: 22 de Outubro, 2025</p>
                 </div>
+
+                <a href="https://github.com/Mgvz/shark-executor/releases/download/v1.0.1/shark-executor.zip" class="btn btn-primary" style="font-size: 20px; padding: 20px 50px;">
+                    <span>⬇️</span>
+                    DOWNLOAD SHARK EXECUTOR
+                </a>
+
+                <p style="margin-top: 20px; font-size: 14px; color: #666;">
+                    Ao baixar, você concorda com nossos termos de uso
+                </p>
             </div>
 
-            <div class="right-panel">
-                <div class="search-container">
-                    <input type="text" class="search-box" placeholder="🔍 Search Scripts" id="searchBox" oninput="searchScripts()">
+            <div class="warning-banner">
+                <h4>⚠️ AVISO IMPORTANTE</h4>
+                <p>Este é um projeto educacional. Use por sua conta e risco. Não nos responsabilizamos por banimentos ou outros problemas.</p>
+            </div>
+        </section>
+
+        <!-- Installation Section -->
+        <section class="installation" id="installation">
+            <h2 class="section-title">🔧 Como Instalar</h2>
+            <div class="steps-container">
+                <div class="step">
+                    <div class="step-number">1</div>
+                    <div class="step-content">
+                        <h3>Baixe o Arquivo</h3>
+                        <p>Clique no botão de download acima para baixar o arquivo <strong>shark-executor.zip</strong></p>
+                    </div>
                 </div>
-                <div class="scripts-list" id="scriptsList">
-                    <div class="script-category">
-                        <div class="category-title">⭐ Popular Scripts</div>
-                        <div class="script-item" onclick="loadScript('inf-yield')">
-                            <div class="script-name">Infinite Yield</div>
-                            <div class="script-desc">Admin commands</div>
-                        </div>
-                        <div class="script-item" onclick="loadScript('dex')">
-                            <div class="script-name">Dark Dex V3</div>
-                            <div class="script-desc">Game explorer</div>
-                        </div>
-                    </div>
 
-                    <div class="script-category">
-                        <div class="category-title">👁️ Visual Scripts</div>
-                        <div class="script-item" onclick="loadScript('esp')">
-                            <div class="script-name">Universal ESP</div>
-                            <div class="script-desc">See through walls</div>
-                        </div>
+                <div class="step">
+                    <div class="step-number">2</div>
+                    <div class="step-content">
+                        <h3>Extraia o ZIP</h3>
+                        <p>Clique com o botão direito no arquivo baixado e selecione <strong>"Extrair tudo..."</strong>. Escolha uma pasta de sua preferência (recomendado: C:\Shark-Executor)</p>
                     </div>
+                </div>
 
-                    <div class="script-category">
-                        <div class="category-title">🎮 Gameplay Scripts</div>
-                        <div class="script-item" onclick="loadScript('fly')">
-                            <div class="script-name">Fly Script</div>
-                            <div class="script-desc">Fly around map</div>
-                        </div>
-                        <div class="script-item" onclick="loadScript('speed')">
-                            <div class="script-name">Speed Hack</div>
-                            <div class="script-desc">Increase speed</div>
-                        </div>
-                        <div class="script-item" onclick="loadScript('noclip')">
-                            <div class="script-name">Noclip</div>
-                            <div class="script-desc">Walk through walls</div>
-                        </div>
+                <div class="step">
+                    <div class="step-number">3</div>
+                    <div class="step-content">
+                        <h3>Instale as Dependências</h3>
+                        <p>Entre na pasta extraída e execute o arquivo <strong>install.bat</strong>. Aguarde a instalação do Node.js e dependências (necessário apenas na primeira vez)</p>
                     </div>
+                </div>
 
-                    <div class="script-category">
-                        <div class="category-title">🎯 Combat Scripts</div>
-                        <div class="script-item" onclick="loadScript('aimbot')">
-                            <div class="script-name">Aimbot</div>
-                            <div class="script-desc">Auto aim</div>
-                        </div>
+                <div class="step">
+                    <div class="step-number">4</div>
+                    <div class="step-content">
+                        <h3>Inicie o Executor</h3>
+                        <p>Clique duas vezes no arquivo <strong>START.bat</strong>. O Shark Executor abrirá automaticamente!</p>
                     </div>
+                </div>
 
-                    <div class="script-category">
-                        <div class="category-title">🤖 Automation</div>
-                        <div class="script-item" onclick="loadScript('autofarm')">
-                            <div class="script-name">Auto Farm</div>
-                            <div class="script-desc">Automatic farming</div>
-                        </div>
+                <div class="step">
+                    <div class="step-number">5</div>
+                    <div class="step-content">
+                        <h3>Conecte ao Roblox</h3>
+                        <p>Abra o Roblox, entre em algum jogo e clique no botão <strong>"Attach"</strong> no Shark Executor. Aguarde a mensagem de sucesso!</p>
+                    </div>
+                </div>
+
+                <div class="step">
+                    <div class="step-number">6</div>
+                    <div class="step-content">
+                        <h3>Execute Scripts</h3>
+                        <p>Digite ou escolha um script da biblioteca e clique em <strong>"Execute"</strong>. Pronto! 🎉</p>
                     </div>
                 </div>
             </div>
-        </div>
+        </section>
 
-        <!-- Bottom Controls -->
-        <div class="bottom-controls">
-            <div class="control-group">
-                <button class="btn btn-execute" id="executeBtn" onclick="executeScript()">
-                    <span>▶</span>
-                    Execute
-                </button>
-                <button class="btn btn-clear" onclick="clearEditor()">
-                    <span>🗑</span>
-                    Clear
-                </button>
-                <button class="btn btn-save" onclick="saveScript()">
-                    <span>💾</span>
-                    Save
-                </button>
-            </div>
-            <div class="control-group">
-                <div class="status-indicator" id="statusIndicator">
-                    <span class="status-dot"></span>
-                    <span class="status-text">Not Attached</span>
+        <!-- FAQ Section -->
+        <section class="faq" id="faq">
+            <h2 class="section-title">❓ Perguntas Frequentes</h2>
+            <div class="faq-container">
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        É seguro usar o Shark Executor?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        O Shark Executor é um projeto educacional open-source. O código é transparente e pode ser auditado por qualquer pessoa. No entanto, use por sua conta e risco.
+                    </div>
                 </div>
-                <button class="btn btn-attach" id="attachBtn" onclick="attachToRoblox()">
-                    <span>💉</span>
-                    Attach
-                </button>
-                <button class="btn btn-kill" onclick="killProcess()">
-                    <span>🔴</span>
-                    Kill
-                </button>
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        Funciona em Mac ou Linux?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Atualmente o Shark Executor é compatível apenas com Windows 10/11. Versões para Mac e Linux estão em desenvolvimento.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        Preciso pagar para usar?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Não! O Shark Executor é 100% gratuito e sempre será. Não há taxas ocultas, anúncios ou limitações.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        Posso ser banido do Roblox?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Sim, usar qualquer executor pode resultar em banimento da sua conta. Use por sua conta e risco. Recomendamos usar em contas alternativas.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        Como atualizar para nova versão?
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Basta baixar a nova versão do site e substituir os arquivos antigos. Suas configurações e scripts salvos serão mantidos.
+                    </div>
+                </div>
+
+                <div class="faq-item" onclick="toggleFaq(this)">
+                    <div class="faq-question">
+                        O antivírus detecta como vírus!
+                        <span>+</span>
+                    </div>
+                    <div class="faq-answer">
+                        Isso é um falso positivo comum em executors devido à natureza do software. O Shark Executor não contém malware. Você pode verificar o código fonte no GitHub.
+                    </div>
+                </div>
             </div>
-        </div>
+        </section>
+
+        <!-- Footer -->
+        <footer>
+            <div class="footer-links">
+                <a href="https://github.com/Mgvz/shark-executor">GitHub</a>
+                <a href="#download">Download</a>
+                <a href="#faq">FAQ</a>
+                <a href="https://discord.gg/sharkexecutor">Discord</a>
+            </div>
+            <div class="copyright">
+                © 2025 Shark Executor. Todos os direitos reservados.<br>
+                Este é um projeto educacional. Use por sua conta e risco.
+            </div>
+        </footer>
     </div>
 
-    <!-- Syringe Animation -->
-    <div class="overlay" id="overlay"></div>
-    <div class="syringe-container" id="syringeContainer">
-        <div class="syringe">
-            <div class="syringe-plunger"></div>
-            <div class="syringe-body">
-                <div class="syringe-liquid"></div>
-            </div>
-            <div class="syringe-needle"></div>
-        </div>
-    </div>
-
-    <!-- Toast Container -->
-    <div class="toast-container" id="toastContainer"></div>
-
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/FileSaver.js/2.0.5/FileSaver.min.js"></script>
     <script>
-        // State
-        let isAttached = false;
-        let currentTab = 1;
-        let tabCount = 4;
-        let tabContents = {
-            1: 'loadstring(game:HttpGet("https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source"))()',
-            2: '',
-            3: '',
-            4: ''
-        };
+        // Particles.js background effect
+        const canvas = document.getElementById('particles');
+        const ctx = canvas.getContext('2d');
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
 
-        const codeEditor = document.getElementById('codeEditor');
-        const lineNumbers = document.getElementById('lineNumbers');
-        const consoleContent = document.getElementById('consoleContent');
-        const executeBtn = document.getElementById('executeBtn');
-        const attachBtn = document.getElementById('attachBtn');
-        const statusIndicator = document.getElementById('statusIndicator');
-        const overlay = document.getElementById('overlay');
-        const syringeContainer = document.getElementById('syringeContainer');
-        const toastContainer = document.getElementById('toastContainer');
+        const particles = [];
+        const particleCount = 100;
 
-        // Line numbers
-        function updateLineNumbers() {
-            const lines = codeEditor.value.split('\n').length;
-            const numbers = [];
-            for (let i = 1; i <= lines; i++) {
-                numbers.push(i);
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.radius = Math.random() * 2;
             }
-            lineNumbers.textContent = numbers.join('\n');
-        }
 
-        codeEditor.addEventListener('input', () => {
-            updateLineNumbers();
-            tabContents[currentTab] = codeEditor.value;
-        });
-
-        codeEditor.addEventListener('scroll', () => {
-            lineNumbers.scrollTop = codeEditor.scrollTop;
-        });
-
-        // Tab support
-        codeEditor.addEventListener('keydown', (e) => {
-            if (e.key === 'Tab') {
-                e.preventDefault();
-                const start = codeEditor.selectionStart;
-                const end = codeEditor.selectionEnd;
-                codeEditor.value = codeEditor.value.substring(0, start) + '    ' + codeEditor.value.substring(end);
-                codeEditor.selectionStart = codeEditor.selectionEnd = start + 4;
-                updateLineNumbers();
+            draw() {
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                ctx.fillStyle = 'rgba(0, 212, 255, 0.5)';
+                ctx.fill();
             }
-        });
 
-        // Toast notification
-        function showToast(message, type = 'info') {
-            const toast = document.createElement('div');
-            toast.className = `toast ${type}`;
-            const icons = {
-                success: '✓',
-                error: '✕',
-                info: 'ℹ'
-            };
-            toast.innerHTML = `<span style="font-size: 16px; margin-right: 10px;">${icons[type]}</span>${message}`;
-            toastContainer.appendChild(toast);
+            update() {
+                this.x += this.vx;
+                this.y += this.vy;
 
-            setTimeout(() => {
-                toast.style.animation = 'slideIn 0.3s ease-out reverse';
-                setTimeout(() => toast.remove(), 300);
-            }, 3000);
-        }
-
-        // Console logging
-        function logConsole(message, type = 'info') {
-            const line = document.createElement('div');
-            line.className = `console-line ${type}`;
-            const timestamp = new Date().toLocaleTimeString();
-            line.textContent = `[${timestamp}] ${message}`;
-            consoleContent.appendChild(line);
-            consoleContent.scrollTop = consoleContent.scrollHeight;
-
-            const lines = consoleContent.querySelectorAll('.console-line');
-            if (lines.length > 100) {
-                lines[0].remove();
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
             }
         }
 
-        function clearConsole() {
-            consoleContent.innerHTML = '';
-            logConsole('Console cleared', 'info');
+        for (let i = 0; i < particleCount; i++) {
+            particles.push(new Particle());
         }
 
-        // Attach functionality
-        function attachToRoblox() {
-            if (isAttached) {
-                showToast('Already attached to Roblox!', 'info');
-                return;
-            }
-
-            overlay.classList.add('active');
-            syringeContainer.classList.add('active');
-
-            logConsole('Initializing injection...', 'info');
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
             
-            setTimeout(() => logConsole('Searching for Roblox process...', 'info'), 500);
-            setTimeout(() => logConsole('Process found: RobloxPlayerBeta.exe', 'success'), 1000);
-            setTimeout(() => logConsole('Injecting DLL...', 'info'), 1500);
+            particles.forEach(particle => {
+                particle.update();
+                particle.draw();
+            });
 
-            setTimeout(() => {
-                isAttached = true;
-                attachBtn.classList.add('attached');
-                attachBtn.innerHTML = '<span>✓</span> Attached';
-                statusIndicator.classList.add('attached');
-                statusIndicator.querySelector('.status-text').textContent = 'Attached';
-                overlay.classList.remove('active');
-                
-                setTimeout(() => syringeContainer.classList.remove('active'), 500);
+            // Draw lines between close particles
+            particles.forEach((p1, i) => {
+                particles.slice(i + 1).forEach(p2 => {
+                    const dx = p1.x - p2.x;
+                    const dy = p1.y - p2.y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
 
-                showToast('Successfully attached to Roblox!', 'success');
-                logConsole('Successfully attached to Roblox', 'success');
-                logConsole('Executor ready! You can now run scripts.', 'success');
-            }, 2000);
-        }
-
-        // Execute functionality
-        function executeScript() {
-            if (!isAttached) {
-                showToast('Please attach to Roblox first!', 'error');
-                logConsole('Execute failed: Not attached', 'error');
-                return;
-            }
-
-            const code = codeEditor.value.trim();
-            if (!code) {
-                showToast('No script to execute!', 'error');
-                logConsole('Execute failed: Empty script', 'error');
-                return;
-            }
-
-            executeBtn.disabled = true;
-            executeBtn.innerHTML = '<span>⏳</span> Executing...';
-
-            overlay.classList.add('active');
-            syringeContainer.classList.add('active');
-            syringeContainer.classList.add('executing');
-
-            logConsole('Executing script...', 'info');
-            logConsole(`Script length: ${code.length} characters`, 'info');
-
-            setTimeout(() => {
-                overlay.classList.remove('active');
-                
-                setTimeout(() => {
-                    syringeContainer.classList.remove('active');
-                    syringeContainer.classList.remove('executing');
-                }, 500);
-
-                showToast('Script executed successfully!', 'success');
-                logConsole('Script executed successfully', 'success');
-                
-                const firstLine = code.split('\n')[0];
-                logConsole(`Executed: ${firstLine.substring(0, 60)}${firstLine.length > 60 ? '...' : ''}`, 'info');
-                
-                if (code.includes('print(')) {
-                    logConsole('--- Script Output ---', 'info');
-                    const printMatches = code.match(/print\((.*?)\)/g);
-                    if (printMatches) {
-                        printMatches.slice(0, 5).forEach(match => {
-                            const content = match.replace(/print\(|\)/g, '').replace(/['"]/g, '');
-                            logConsole(`> ${content}`, 'success');
-                        });
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.moveTo(p1.x, p1.y);
+                        ctx.lineTo(p2.x, p2.y);
+                        ctx.strokeStyle = `rgba(0, 212, 255, ${0.2 * (1 - distance / 150)})`;
+                        ctx.stroke();
                     }
-                    logConsole('--- End Output ---', 'info');
-                }
-                
-                if (code.toLowerCase().includes('loadstring')) logConsole('Remote script loaded', 'success');
-                if (code.toLowerCase().includes('walkspeed')) logConsole('WalkSpeed modified', 'success');
-                if (code.toLowerCase().includes('esp')) logConsole('ESP enabled', 'success');
-                if (code.toLowerCase().includes('fly')) logConsole('Fly script loaded', 'success');
-                if (code.toLowerCase().includes('noclip')) logConsole('Noclip enabled', 'success');
-                
-                logConsole(`Execution completed at ${new Date().toLocaleTimeString()}`, 'info');
-                
-                executeBtn.disabled = false;
-                executeBtn.innerHTML = '<span>▶</span> Execute';
-            }, 2000);
-        }
-
-        // Clear editor
-        function clearEditor() {
-            codeEditor.value = '';
-            tabContents[currentTab] = '';
-            updateLineNumbers();
-            showToast('Editor cleared', 'info');
-            logConsole('Editor cleared', 'info');
-        }
-
-        // Kill process
-        function killProcess() {
-            if (!isAttached) {
-                showToast('Not attached to any process', 'error');
-                return;
-            }
-
-            isAttached = false;
-            attachBtn.classList.remove('attached');
-            attachBtn.innerHTML = '<span>💉</span> Attach';
-            statusIndicator.classList.remove('attached');
-            statusIndicator.querySelector('.status-text').textContent = 'Not Attached';
-            
-            showToast('Detached from Roblox', 'info');
-            logConsole('Detached from Roblox', 'error');
-        }
-
-        // Save script
-        function saveScript() {
-            const code = codeEditor.value;
-            if (!code.trim()) {
-                showToast('Nothing to save!', 'error');
-                return;
-            }
-
-            const blob = new Blob([code], { type: 'text/plain;charset=utf-8' });
-            saveAs(blob, 'script.lua');
-            showToast('Script saved!', 'success');
-            logConsole('Script saved as script.lua', 'success');
-        }
-
-        // Scripts library
-        const scripts = {
-            'inf-yield': `loadstring(game:HttpGet('https://raw.githubusercontent.com/EdgeIY/infiniteyield/master/source'))()`,
-            'dex': `loadstring(game:HttpGet("https://raw.githubusercontent.com/infyiff/backup/main/dex.lua"))()`,
-            'esp': `-- Universal ESP\nlocal ESP = loadstring(game:HttpGet("https://kiriot22.com/releases/ESP.lua"))()\nESP:Toggle(true)\nESP.Players = true\nESP.Boxes = true`,
-            'fly': `-- Fly Script (Press E)\nlocal flying = false\nlocal speed = 50\n\ngame:GetService("UserInputService").InputBegan:Connect(function(input)\n    if input.KeyCode == Enum.KeyCode.E then\n        flying = not flying\n        print("Fly:", flying)\n    end\nend)`,
-            'speed': `-- Speed Hack\ngame.Players.LocalPlayer.Character.Humanoid.WalkSpeed = 100\nprint("Speed set to 100")`,
-            'noclip': `-- Noclip (Press N)\nlocal noclip = false\ngame:GetService("UserInputService").InputBegan:Connect(function(input)\n    if input.KeyCode == Enum.KeyCode.N then\n        noclip = not noclip\n        print("Noclip:", noclip)\n    end\nend)`,
-            'aimbot': `-- Simple Aimbot\nprint("Aimbot loaded!")\nprint("Aiming at closest player...")`,
-            'autofarm': `-- Auto Farm\nprint("Auto farm started!")\nwhile wait(1) do\n    print("Farming...")\nend`
-        };
-
-        function loadScript(scriptId) {
-            if (scripts[scriptId]) {
-                codeEditor.value = scripts[scriptId];
-                tabContents[currentTab] = scripts[scriptId];
-                updateLineNumbers();
-                showToast(`Script loaded!`, 'success');
-                logConsole(`Script loaded: ${scriptId}`, 'success');
-            }
-        }
-
-        // Search scripts
-        function searchScripts() {
-            const search = document.getElementById('searchBox').value.toLowerCase();
-            const categories = document.querySelectorAll('.script-category');
-            
-            categories.forEach(category => {
-                const items = category.querySelectorAll('.script-item');
-                let hasVisible = false;
-                
-                items.forEach(item => {
-                    const name = item.querySelector('.script-name').textContent.toLowerCase();
-                    const desc = item.querySelector('.script-desc').textContent.toLowerCase();
-                    const matches = name.includes(search) || desc.includes(search);
-                    
-                    item.style.display = matches ? 'block' : 'none';
-                    if (matches) hasVisible = true;
                 });
-                
-                category.style.display = hasVisible ? 'block' : 'none';
             });
+
+            requestAnimationFrame(animate);
         }
 
-        // Tab management
-        document.querySelectorAll('.tab').forEach(tab => {
-            tab.addEventListener('click', function(e) {
-                if (e.target.classList.contains('close-tab')) return;
-                
-                tabContents[currentTab] = codeEditor.value;
-                
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                currentTab = parseInt(this.dataset.tab);
-                
-                codeEditor.value = tabContents[currentTab] || '';
-                updateLineNumbers();
-            });
+        animate();
+
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         });
 
-        function closeTab(event, tabNum) {
-            event.stopPropagation();
-            
-            const tabs = document.querySelectorAll('.tab');
-            if (tabs.length <= 1) {
-                showToast('Cannot close last tab', 'error');
-                return;
-            }
-            
-            const tab = document.querySelector(`.tab[data-tab="${tabNum}"]`);
-            delete tabContents[tabNum];
-            tab.remove();
-            
-            if (currentTab === tabNum) {
-                const remaining = document.querySelectorAll('.tab');
-                if (remaining.length > 0) {
-                    remaining[0].click();
+        // FAQ Toggle
+        function toggleFaq(element) {
+            element.classList.toggle('active');
+            const icon = element.querySelector('.faq-question span');
+            icon.textContent = element.classList.contains('active') ? '−' : '+';
+        }
+
+        // Smooth scroll
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({ behavior: 'smooth' });
                 }
-            }
-            
-            logConsole(`Tab ${tabNum} closed`, 'info');
-        }
-
-        function addNewTab() {
-            tabCount++;
-            tabContents[tabCount] = '';
-            
-            const newTab = document.createElement('div');
-            newTab.className = 'tab';
-            newTab.dataset.tab = tabCount;
-            newTab.innerHTML = `
-                <span class="tab-icon">📄</span>
-                Tab ${tabCount}
-                <span class="close-tab" onclick="closeTab(event, ${tabCount})">✕</span>
-            `;
-            
-            document.querySelector('.add-tab').before(newTab);
-            
-            newTab.addEventListener('click', function(e) {
-                if (e.target.classList.contains('close-tab')) return;
-                
-                tabContents[currentTab] = codeEditor.value;
-                
-                document.querySelectorAll('.tab').forEach(t => t.classList.remove('active'));
-                this.classList.add('active');
-                currentTab = parseInt(this.dataset.tab);
-                
-                codeEditor.value = tabContents[currentTab] || '';
-                updateLineNumbers();
             });
-            
-            newTab.click();
-            showToast(`Tab ${tabCount} created`, 'success');
-        }
-
-        // Fullscreen
-        function toggleFullscreen() {
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen();
-            } else {
-                document.exitFullscreen();
-            }
-        }
-
-        // Keyboard shortcuts
-        document.addEventListener('keydown', (e) => {
-            if ((e.ctrlKey || e.metaKey) && e.key === 'Enter') {
-                e.preventDefault();
-                executeScript();
-            }
-            if ((e.ctrlKey || e.metaKey) && e.key === 's') {
-                e.preventDefault();
-                saveScript();
-            }
         });
-
-        // Initialize
-        updateLineNumbers();
-        logConsole('Shark Executor initialized', 'success');
-        logConsole('Version 1.0.1 - Web Edition', 'info');
-        logConsole('Click "Attach" to connect to Roblox', 'info');
     </script>
 </body>
 </html>
